@@ -1,6 +1,6 @@
 import { usersMongoose } from "../../services/index.js";
 import { hashear } from "../../services/crypt.js";
-import { COOKIE_OPTS } from "../../conf/config.js";
+import { COOKIE_OPTS } from "../../config/config.js";
 //Se guarda en la base de datos el usuario enviado desde register.handlebars
 export async function register(req, res) {
   try {
@@ -30,6 +30,6 @@ export async function logout(req, res) {
       return res.status(500).json({ status: "logout error", body: err });
     }
     res.clearCookie("authorization", COOKIE_OPTS);
-    res.json({ status: "success", message: "logout OK" });
+    res.status(200).json({ status: "success", message: "logout OK" });
   });
 }

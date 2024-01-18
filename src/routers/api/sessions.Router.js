@@ -6,7 +6,7 @@ import {
   cambiarPass,
 } from "../../controllers/ControllersApi/sessions.Constrollers.js";
 import { encriptar } from "../../utils/criptorafia.js";
-import { COOKIE_OPTS } from "../../conf/config.js";
+import { COOKIE_OPTS } from "../../config/config.js";
 export const sessionsRouter = new Router();
 
 sessionsRouter.use((req, res, next) => {

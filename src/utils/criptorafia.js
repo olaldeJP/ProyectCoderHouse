@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../conf/config.js";
+import { JWT_SECRET } from "../config/config.js";
 
 export function encriptar(data) {
   return new Promise((resolve, reject) => {

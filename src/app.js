@@ -7,13 +7,14 @@ import {
   inyectarSocketServer,
   socketMessage,
 } from "./socket/socket.Controllers.js";
-import { PORT, URL_MONGO } from "./conf/config.js";
+import { PORT, URL_MONGO } from "./config/config.js";
 import cookieParser from "cookie-parser";
-import { sessionConf } from "./conf/session.conf.js";
-import { mongoConf } from "./conf/mongodb.conf.js";
-import { initializePassport } from "./conf/passport.conf.js";
-import { handlebarsConf } from "./conf/handlebars.conf.js";
-import { cookieKey } from "./conf/config.js";
+import { sessionConf } from "./config/session.conf.js";
+import { mongoConf } from "./config/mongodb.conf.js";
+import { initializePassport } from "./config/passport.conf.js";
+import { handlebarsConf } from "./config/handlebars.conf.js";
+import { cookieKey } from "./config/config.js";
+import { soloLoguedosApi } from "./controllers/ControllersApi/autorizaciones.Controllers.js";
 
 const app = express();
 
@@ -42,5 +43,6 @@ webSocketServer.on("connection", onConnection(webSocketServer)); //Cuando alguie
 app.use(inyectarSocketServer(webSocketServer));
 app.use(socketMessage(webSocketServer));
 //Se agregan las apis a las rutas
+app.use(soloLoguedosApi);
 app.use("/api", apiRouter);
 app.use("/", webRouter);

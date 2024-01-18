@@ -7,7 +7,8 @@ import {
   messageMongoose,
 } from "../../services/index.js";
 
-import { emailAdmin } from "../../conf/config.js";
+import { emailAdmin } from "../../config/config.js";
+import { desencriptar } from "../../utils/criptorafia.js";
 
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
@@ -25,7 +26,6 @@ export async function homeWeb(req, res) {
       lean: true, // se muestran los objetos
     };
     const criterioBusqueda = {};
-
     if (req.query.sort) {
       //en el caso que se envie un query.sort se ordenaran los productos
       opcionesDePaginacion.sort = {

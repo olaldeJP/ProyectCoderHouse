@@ -11,8 +11,11 @@ import {
   restartPassword,
   homeWeb,
 } from "../../controllers/ControllersWeb/web.Constrollers.js";
+import { soloLoguedosApi } from "../../controllers/ControllersApi/autorizaciones.Controllers.js";
 
 export const webRouter = new Router();
+
+webRouter.get("/", homeWeb);
 
 //Renderiza la pagina de RealTimeHandlebars
 webRouter.get("/realTimeProducts", realTimeProductsWeb);
@@ -42,11 +45,6 @@ webRouter.get("/perfil", verPerfil);
 webRouter.get("/restartpassword", restartPassword);
 
 //Muestra los productos con paginate con Handlebars
-
-webRouter.get("/", homeWeb);
-
-//Muestra Productos con Paginate con HandleBars
-webRouter.get("/products", homeWeb);
 
 //descripcion del producto
 webRouter.get("/:pid", mostrarProducto);

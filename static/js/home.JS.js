@@ -2,6 +2,7 @@ const usserName = "unUsuario";
 const ordenDeProduct = document.querySelector("#ordenar");
 const botonBuscar = document.querySelector("#botonBuscar");
 const botonDesc = document.querySelectorAll("#botonDescripcon");
+
 const socket = io("http://localhost:8080/", {
   auth: {
     usserName,
@@ -9,6 +10,7 @@ const socket = io("http://localhost:8080/", {
 });
 
 let ordenar = true;
+
 function irPagina(limit) {
   const pagDeseada = document.querySelector("input").value || 1;
   window.location = `/?limit=${limit}&page=${pagDeseada}&sort=${ordenar}`;
