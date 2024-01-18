@@ -1,7 +1,4 @@
-body{
-    background-color: rgba(0, 64, 255, 0.74);
-    
-}
+
 .centrarElementos{
     display: flex;
 }
@@ -9,7 +6,9 @@ body{
    
     display: flex;  
     justify-content: space-around;
-    border:  solid 1px black;
+    border:  solid 2px rgb(22, 95, 206);
+    border-radius: 15px;
+    margin-bottom: 30px;
 }
 
 .sectionForms{
@@ -52,7 +51,7 @@ a{
     transition: all 1s;
 }
 a:hover{
-    color: beige;
+    color: rgb(32, 81, 172);
     border:solid 2px white;
     text-decoration: underline;
 }
@@ -67,8 +66,8 @@ a:hover{
   left: 80px;
   width: 50%;
   height: 30%;
-  background-color: #3498db;
-  border: 8px solid black;
+  background-color: gray;
+  border: 2px solid rgba(48, 106, 214, 0.807)
 }
 
 .butModal{
@@ -81,7 +80,7 @@ a:hover{
     transition: 2s;
 }
 .butModal:hover{
-   background-color:rgba(52, 43, 226, 0.807)
+   background-color:rgba(48, 106, 214, 0.807)
 }
 .butModalC:hover{
     background-color:red;
@@ -107,9 +106,11 @@ a:hover{
 
 .box{
     margin-right: 20px;
-    border: solid 2px rgb(255, 255, 255);
+    border: solid 3px rgba(48, 106, 214, 0.807);
+    border-radius: 15px;
+    padding: 10px;
+
     width: 330px;
-    background-color: #3498db;
     display: inline-block;
     vertical-align: top;
 }
@@ -117,15 +118,18 @@ a:hover{
     display: grid;
    align-content: center;
     flex-direction: column;
-    background-color: cadetblue;
-    width: 100%;
+    border: solid 2px  rgba(48, 106, 214, 0.807);;
+    border-radius: 30px;
+    padding: 20px;
+    margin-top: 35px;
+    width: 60%;
     height: 450px;
     
 }
 .windowsMessages{
-    width: 40%;
     height: 400px;
     background-color: white; 
+  
     overflow-y: auto;   
 }
 .hidden{

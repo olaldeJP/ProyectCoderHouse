@@ -8,8 +8,8 @@ export const JWT_SECRET = "palabraSecreta";
 export const emailAdmin = "adminCoder@coder.com";
 export const COOKIE_OPTS = {
   signed: true,
-  maxAge: 24 * 60 * 60 * 1000,
+  maxAge: 1000 * 60 * 60 * 24,
   httpOnly: true,
 };
 
-export const cookieKey = "claveCookie";
+export const COOKIE_KEY = "claveCookie";

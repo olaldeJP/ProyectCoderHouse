@@ -13,7 +13,7 @@ import { sessionConf } from "./config/session.conf.js";
 import { mongoConf } from "./config/mongodb.conf.js";
 import { initializePassport } from "./config/passport.conf.js";
 import { handlebarsConf } from "./config/handlebars.conf.js";
-import { cookieKey } from "./config/config.js";
+import { COOKIE_KEY } from "./config/config.js";
 import { soloLoguedosApi } from "./controllers/ControllersApi/autorizaciones.Controllers.js";
 
 const app = express();
@@ -26,7 +26,7 @@ app.use(express.static("./views"));
 app.use("/static", express.static("./static"));
 
 handlebarsConf(app); //Motor de plantillas : Handlebars
-app.use(cookieParser(cookieKey)); //para usar cookies luego de instalar npm install express cookie-parser
+app.use(cookieParser(COOKIE_KEY)); //para usar cookies luego de instalar npm install express cookie-parser
 mongoConf(URL_MONGO); // conexion a base de datos
 sessionConf(app, URL_MONGO); //Se cambia por mongo-session
 initializePassport(app); //cargo los middlewares de passport

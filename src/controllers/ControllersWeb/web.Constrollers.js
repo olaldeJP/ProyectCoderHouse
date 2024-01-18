@@ -3,17 +3,13 @@
 import {
   cartsMongoose,
   productsMongoose,
-  usersMongoose,
   messageMongoose,
 } from "../../services/index.js";
-
-import { emailAdmin } from "../../config/config.js";
-import { desencriptar } from "../../utils/criptorafia.js";
 
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
     titulo: " realTimeProductsWeb",
-    usser: req.session["usser"],
+    user: req.user,
   });
 }
 //Muestra la pagina principal con los productos paginados
@@ -52,7 +48,7 @@ export async function homeWeb(req, res) {
       hasNextPage: productos.hasNextPage, //si existe pagina siguiente
       hayDocs: productos.docs > 0, //si docs es mayor a 0 los envia
       prevLink: productos.prevLink,
-      usser: req.user, //envia el usser conectado con fist_name , last_name , y isAdmin
+      user: req.user, //envia el usser conectado con fist_name , last_name , y isAdmin
     });
   } catch (error) {
     return res.status(400).json({
@@ -71,7 +67,7 @@ export async function chatHandlebars(req, res) {
       res["sendMessage"]();
       return res.status(200).render("chat.handlebars", {
         status: "success",
-        payload: req.session["usser"],
+        user: req.user,
       });
     } else {
       return res
@@ -89,7 +85,9 @@ export async function mostrarProducto(req, res) {
 
     const producto = await productsMongoose.findById(pid).lean();
 
-    return res.status(200).render("product.handlebars", { producto });
+    return res
+      .status(200)
+      .render("product.handlebars", { producto, user: req.user });
   } catch (error) {
     return res.status(400).json({ status: "ERROR", message: error.message });
   }
@@ -100,9 +98,10 @@ export async function mostrarProductosCarrito(req, res) {
     const cid = req.params.cid;
     const carrito = await cartsMongoose.findById(cid).lean();
     if (carrito) {
-      res
-        .status(200)
-        .render("carrito.handlebars", { products: carrito.products });
+      res.status(200).render("carrito.handlebars", {
+        products: carrito.products,
+        user: req.user,
+      });
     } else
       res
         .status(400)
@@ -128,7 +127,7 @@ export async function verPerfil(req, res) {
   if (req.user) {
     res.status(201).render("perfil.handlebars", {
       status: "success",
-      payload: req.user,
+      user: req.user,
     });
   } else {
     res.status(201).render("perfil.handlebars", {

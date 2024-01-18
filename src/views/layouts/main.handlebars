@@ -7,6 +7,13 @@
     <title>{{titulo}}</title>
 </head>
 <body> 
+    
+{{#if user}}
+{{>navbarConectado}}
+{{else}}
+{{>navbarNoConectado}}
+{{/if}}
+
     {{{body}}}
 </body>
 

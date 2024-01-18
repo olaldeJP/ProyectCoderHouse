@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const MessageSchema = new Schema(
   {
-    usser: { type: String },
+    user: { type: String },
     message: { type: String },
   },
   { collection: "messages" },

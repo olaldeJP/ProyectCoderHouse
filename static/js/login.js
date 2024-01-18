@@ -4,7 +4,7 @@ const formLogin = document.querySelector("#formulario");
 formLogin.addEventListener("submit", async (event) => {
   event.preventDefault();
   try {
-    const inputsVAlores = JSON.stringify({
+    const inputsValores = JSON.stringify({
       email: document.querySelector("#email").value,
       password: document.querySelector("#password").value,
     });
@@ -15,7 +15,7 @@ formLogin.addEventListener("submit", async (event) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // @ts-ignore
-      body: inputsVAlores,
+      body: inputsValores,
     });
     const res = await response.json(); // si el status es Success vuelve a / a ver los productos, sino envia una alert
     if (res.status === "success") {
