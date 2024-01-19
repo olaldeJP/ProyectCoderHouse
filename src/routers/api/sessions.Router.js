@@ -21,7 +21,7 @@ sessionsRouter.post(
   async (req, res, next) => {
     const accessToken = await encriptar(req.user);
     res.cookie("authorization", accessToken, COOKIE_OPTS);
-    res.status(201).json({ status: "success", payload: req.user });
+    res.status(201).json({ status: "success", user: req.user });
   },
   (error, req, res, next) => {
     res.status(401).json({ status: "error", message: error.message });
