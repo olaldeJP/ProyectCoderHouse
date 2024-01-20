@@ -1,7 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
 import {
-  register,
   logout,
   cambiarPass,
 } from "../../controllers/ControllersApi/sessions.Constrollers.js";

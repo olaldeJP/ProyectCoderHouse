@@ -14,7 +14,7 @@ import { mongoConf } from "./config/mongodb.conf.js";
 import { initializePassport } from "./config/passport.conf.js";
 import { handlebarsConf } from "./config/handlebars.conf.js";
 import { COOKIE_KEY } from "./config/config.js";
-import { extraerUserCookie } from "./controllers/ControllersApi/autorizaciones.Controllers.js";
+import { extraerUserCookie } from "./middlewares/cookies.Middlewares.js";
 
 const app = express();
 
