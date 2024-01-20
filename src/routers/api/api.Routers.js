@@ -11,5 +11,5 @@ export const apiRouter = new Router();
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/carts", cartsRouter);
 apiRouter.use("/sessions", sessionsRouter);
-apiRouter.use("/user", userRouter);
+apiRouter.use("/users", userRouter);
 apiRouter.use("/messages", chatRouter);

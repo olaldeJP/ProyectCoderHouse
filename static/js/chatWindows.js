@@ -10,7 +10,7 @@ const socket = io();
 let usuario;
 
 window.addEventListener("load", async () => {
-  const user = await fetch("/api/user/current");
+  const user = await fetch("/api/users/current");
   if (user.status === 200) {
     usuario = (await user.json()).user;
   } else {

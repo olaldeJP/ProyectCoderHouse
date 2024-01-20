@@ -14,7 +14,7 @@ import { mongoConf } from "./config/mongodb.conf.js";
 import { initializePassport } from "./config/passport.conf.js";
 import { handlebarsConf } from "./config/handlebars.conf.js";
 import { COOKIE_KEY } from "./config/config.js";
-import { soloLoguedosApi } from "./controllers/ControllersApi/autorizaciones.Controllers.js";
+import { extraerUserCookie } from "./controllers/ControllersApi/autorizaciones.Controllers.js";
 
 const app = express();
 
@@ -43,6 +43,6 @@ webSocketServer.on("connection", onConnection(webSocketServer)); //Cuando alguie
 app.use(inyectarSocketServer(webSocketServer));
 app.use(socketMessage(webSocketServer));
 //Se agregan las apis a las rutas
-app.use(soloLoguedosApi);
+app.use(extraerUserCookie);
 app.use("/api", apiRouter);
 app.use("/", webRouter);

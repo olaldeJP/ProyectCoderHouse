@@ -11,8 +11,7 @@ import {
   restartPassword,
   homeWeb,
 } from "../../controllers/ControllersWeb/web.Constrollers.js";
-import { encriptar } from "../../utils/criptorafia.js";
-import { COOKIE_OPTS } from "../../config/config.js";
+import { guardarUserToken } from "../../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
 
@@ -33,10 +32,9 @@ webRouter.get("/githublogin", passport.authenticate("loginGithub"));
 webRouter.get(
   "/githubcallback",
   passport.authenticate("loginGithub", { failWithError: true }),
-  async (req, res, next) => {
-    const accessToken = await encriptar(req.user);
-    res.cookie("authorization", accessToken, COOKIE_OPTS);
-    res.redirect("/");
+  guardarUserToken,
+  async (req, res) => {
+    res.rendirect("/");
   }
 );
 //////Muestra ventana de Login.handlebars

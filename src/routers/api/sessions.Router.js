@@ -5,24 +5,23 @@ import {
   logout,
   cambiarPass,
 } from "../../controllers/ControllersApi/sessions.Constrollers.js";
-import { encriptar } from "../../utils/criptorafia.js";
-import { COOKIE_OPTS } from "../../config/config.js";
+import { guardarUserToken } from "../../middlewares/cookies.Middlewares.js";
 export const sessionsRouter = new Router();
 
 sessionsRouter.use((req, res, next) => {
   next();
 });
-sessionsRouter.post("/register", register);
+
 sessionsRouter.post(
   "/loginPassport",
   passport.authenticate("loginLocal", {
     failWithError: true,
   }),
-  async (req, res, next) => {
-    const accessToken = await encriptar(req.user);
-    res.cookie("authorization", accessToken, COOKIE_OPTS);
+  guardarUserToken,
+  async (req, res) => {
     res.status(201).json({ status: "success", user: req.user });
   },
+
   (error, req, res, next) => {
     res.status(401).json({ status: "error", message: error.message });
   }

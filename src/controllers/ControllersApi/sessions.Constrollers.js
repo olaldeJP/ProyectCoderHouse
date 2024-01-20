@@ -2,11 +2,12 @@ import { usersMongoose } from "../../services/index.js";
 import { hashear } from "../../services/crypt.js";
 import { COOKIE_OPTS } from "../../config/config.js";
 //Se guarda en la base de datos el usuario enviado desde register.handlebars
-export async function register(req, res) {
+export async function register(req, res, next) {
   try {
     req.body.password = hashear(req.body.password);
     const reg = await usersMongoose.create(req.body);
-    res.redirect("/api/sessions/loginPassport");
+    req.user = reg.toObject();
+    next();
   } catch (error) {
     return res.status(400).json({ status: "error", message: error.message });
   }
