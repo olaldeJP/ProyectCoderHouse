@@ -34,7 +34,7 @@ webRouter.get(
   passport.authenticate("loginGithub", { failWithError: true }),
   guardarUserToken,
   async (req, res) => {
-    res.rendirect("/");
+    res.redirect("/");
   }
 );
 //////Muestra ventana de Login.handlebars
