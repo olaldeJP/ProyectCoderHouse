@@ -1,15 +1,15 @@
-export const PORT = 8080;
-export const GITHUB_CLIENT_ID = "Iv1.dd0f0c0ac2fd4b85";
-export const GITHUB_CLIENT_SECRET = "d5148b9df88b4ebcce16db081300b07c6f2640e4";
-export const GITHUB_URL_CALLBACK = "http://localhost:8080/githubcallback";
-export const URL_MONGO =
-  "mongodb+srv://olaldejp:kpYKgBF6WyJA5VJN@cluster0.knkx5ka.mongodb.net/ecommerce";
-export const JWT_SECRET = "palabraSecreta";
-export const emailAdmin = "adminCoder@coder.com";
+import "dotenv/config";
+
+export const PORT = process.env.PORT;
+export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+export const GITHUB_URL_CALLBACK = process.env.GITHUB_URL_CALLBACK;
+export const URL_MONGO = process.env.URL_MONGO;
+export const JWT_SECRET = process.env.JWT_SECRET;
+export const emailAdmin = process.env.emailAdmin;
 export const COOKIE_OPTS = {
   signed: true,
   maxAge: 1000 * 60 * 60 * 24,
   httpOnly: true,
 };
-
-export const COOKIE_KEY = "claveCookie";
+export const COOKIE_KEY = process.env.COOKIE_KEY;

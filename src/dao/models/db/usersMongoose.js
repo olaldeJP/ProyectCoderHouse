@@ -12,7 +12,7 @@ const UsersManager = new Schema(
     age: { type: Number },
     password: { type: String, required: true, default: "(NO ES NECESARIO)" },
     carts: { type: [], ref: "carts._id" },
-    rol: { type: String, default: "user" },
+    role: { type: String, enum: ["admin", "user"], default: "user" },
   },
   {
     strict: "throw",
@@ -31,7 +31,7 @@ export async function loginMongoose(email, password) {
       email: "admin",
       first_name: "admin",
       last_name: "admin",
-      rol: "admin",
+      role: "admin",
     };
   } else {
     const usuario = await usersMongoose.findOne({ email }).lean();
@@ -47,7 +47,7 @@ export async function loginMongoose(email, password) {
       last_name: usuario["last_name"],
       age: usuario["age"],
       carts: usuario["carts"],
-      rol: usuario["rol"],
+      role: usuario["role"],
     };
   }
   return datosUsuario;
