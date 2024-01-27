@@ -1,14 +1,11 @@
-// import { cartsManager } from "../../dao/models/fs/cartsManager.js";
-// import { managerProducts } from "../../dao/models/fs/productManager.js";
 import { productsMongoose, cartsMongoose } from "../../services/index.js";
-
+import { cartsService } from "../../services/carts.service.js";
 //Constrollers de los Carts que se agregaran al Carts Router
 
 //Crea un nuevo carrito vacio
-export async function crearNuevoCarts(req, res) {
+export async function createNewCart(req, res) {
   try {
-    const cartN = await cartsMongoose.create({});
-
+    const cartN = await cartsService.crearNuevocart({});
     res.status(201).json(cartN);
   } catch (error) {
     res.status(400).json({
@@ -21,26 +18,9 @@ export async function crearNuevoCarts(req, res) {
 // Agrega el producto (pID) al carrito, verifica si existe, si es asi lo agrega al carrito o lo suma, si no existe el id del carrito o producto lo informa
 export async function agregarProductosArregloCartsByCId(req, res) {
   try {
-    /* Forma De Agregar con FS 
-    const validarProducto = await managerProducts.getProductById(pId);
-    if (validarProducto) {
-      await cartsManager.addProductsCartsByCId(cId, pId);
-      res.status(200).json({
-        status: "success",
-        mensaje: `El Producto ${pId} se agrego al carrito con id ${cId}`,
-      });
-    } else {
-      res.status(400).json({
-        status: "error",
-        mensaje: "Error al agregar el producto , ID invalido",
-        
-      });  
-    }  */
-
     const cId = req.params.cid;
     const pId = req.params.pid;
     // Buscar el objeto por ID
-
     const buscarProduct = await productsMongoose.findOne({ _id: pId });
     const buscarCart = await cartsMongoose.findOne({ _id: cId });
     if (buscarProduct) {

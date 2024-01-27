@@ -3,7 +3,7 @@ import {
   agregarProductosArregloCartsByCId,
   mostrarListaDeCarts,
   mostrarListaDeProductosByCId,
-  crearNuevoCarts,
+  createNewCart,
   borrarProductoDelCarrito,
   actualizarCarrito,
   actualizarProductoEnElCarrito,
@@ -14,7 +14,7 @@ export const cartsRouter = new Router();
 
 //Carga de los controllers al router de carts
 
-cartsRouter.post("/", crearNuevoCarts);
+cartsRouter.post("/", createNewCart);
 cartsRouter.post("/:cid/product/:pid", agregarProductosArregloCartsByCId);
 cartsRouter.get("/:cid", mostrarListaDeProductosByCId);
 cartsRouter.get("/", mostrarListaDeCarts);

@@ -1,9 +1,8 @@
 import passport from "passport";
+import { usersService } from "../services/users.service.js";
 
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GitHubStrategy } from "passport-github2";
-
-import { usersModel, loginMongoose } from "../dao/models/db/usersMongoose.js";
 import {
   GITHUB_CLIENT_SECRET,
   GITHUB_URL_CALLBACK,
@@ -20,7 +19,10 @@ export const initializePassport = (app) => {
       async function verificarUsuario(username, password, done) {
         //por defecto busca el email y passport del req.body
         try {
-          const userLogin = await loginMongoose(username, password);
+          const userLogin = await usersService.buscarUser({
+            email: username,
+            password: password,
+          });
           done(null, userLogin);
         } catch (error) {
           done(error);
@@ -39,9 +41,11 @@ export const initializePassport = (app) => {
         callbackURL: GITHUB_URL_CALLBACK,
       },
       async (__, ___, profile, done) => {
-        let usuario = await usersModel.findOne({ email: profile.username });
+        let usuario = await usersService.buscarUser({
+          email: profile.username,
+        });
         if (!usuario) {
-          usuario = await usersModel.create({
+          usuario = await usersService.register({
             first_name: profile.username,
             email: profile.username,
           });

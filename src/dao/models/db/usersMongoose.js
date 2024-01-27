@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 import { randomUUID } from "node:crypto";
-import { hasheadasSonIguales } from "../../../services/crypt.js";
+import { hasheadasSonIguales, hashear } from "../../../services/crypt.js";
 import { usersMongoose } from "../../../services/index.js";
 
 const UsersManager = new Schema(
@@ -23,32 +23,49 @@ const UsersManager = new Schema(
 
 export const usersModel = mongoose.model("users", UsersManager);
 
-export async function loginMongoose(email, password) {
-  let datosUsuario;
-
-  if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-    datosUsuario = {
-      email: "admin",
-      first_name: "admin",
-      last_name: "admin",
-      role: "admin",
-    };
-  } else {
-    const usuario = await usersMongoose.findOne({ email }).lean();
-    if (!usuario) {
-      throw new Error("login failed");
-    }
-    if (!hasheadasSonIguales(password, usuario["password"])) {
-      throw new Error("login failed");
-    }
-    datosUsuario = {
-      email: usuario["email"],
-      first_name: usuario["first_name"],
-      last_name: usuario["last_name"],
-      age: usuario["age"],
-      carts: usuario["carts"],
-      role: usuario["role"],
-    };
+class UsersDaoMonoose {
+  async create(data) {
+    data.password = hashear(data.password);
+    const newUser = await usersMongoose.create(data);
+    return await this.devolverSinPassword(newUser);
   }
-  return datosUsuario;
+  async readOne(query) {
+    const user = await usersMongoose.findOne({ email: query.email }).lean();
+    if (hasheadasSonIguales(query.password, user.password)) {
+      return await this.devolverSinPassword(user);
+    }
+  }
+  async readMany(query) {
+    return await usersMongoose.find(query).lean();
+  }
+  async updateOne(query) {
+    const updateUser = await usersMongoose.updateOne(
+      { email: query.email },
+      { $set: { password: query.password } },
+      { new: true }
+    );
+    return updateUser;
+  }
+  async updateMany(query, data) {
+    throw new Error("NOT IMPLEMENTED");
+  }
+  async deleteOne(query) {
+    throw new Error("NOT IMPLEMENTED");
+  }
+  async deleteMany(query) {
+    throw new Error("NOT IMPLEMENTED");
+  }
+  async devolverSinPassword(query) {
+    const datosUsuario = {
+      email: query["email"],
+      first_name: query["first_name"],
+      last_name: query["last_name"],
+      age: query["age"],
+      carts: query["carts"],
+      role: query["role"],
+    };
+    return datosUsuario;
+  }
 }
+
+export const userDaoMongoose = new UsersDaoMonoose();

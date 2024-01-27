@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { productsManagerMongoose } from "./ProductsMongoose.js";
+import { cartsMongoose } from "../../../services/index.js";
 import { v4 as uuidv4 } from "uuid";
 import mongoosePaginate from "mongoose-paginate-v2";
 
@@ -24,3 +24,18 @@ const CartSchema = new Schema(
 );
 CartSchema.plugin(mongoosePaginate);
 export const cartsManagerMongoose = model("carts", CartSchema);
+
+class CartsDaoMonoose {
+  async create(data) {
+    const newCart = await cartsMongoose.create({});
+    return newCart;
+  }
+  async readOne(query) {}
+  async readMany(query) {}
+  async updateOne(query, data) {}
+  async updateMany(query, data) {}
+  async deleteOne(query) {}
+  async deleteMany(query) {}
+}
+
+export const cartsDaoMongoose = new CartsDaoMonoose();

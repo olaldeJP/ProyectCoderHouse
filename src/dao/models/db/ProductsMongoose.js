@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 import mongoosePaginate from "mongoose-paginate-v2";
+import { productsMongoose } from "../../../services/index.js";
 
 const productoSchema = new Schema(
   {
@@ -27,3 +28,39 @@ const productoSchema = new Schema(
 );
 productoSchema.plugin(mongoosePaginate);
 export const productsManagerMongoose = model("products", productoSchema);
+
+class ProductsDaoMonoose {
+  async create(data) {
+    const newProducto = await productsMongoose.create(data);
+    return newProducto.toObject();
+  }
+
+  async readOne(query) {
+    const product = await productsMongoose.findById(query);
+    return product;
+  }
+  async readMany(query) {
+    const array = await productsMongoose.find().lean();
+    return array;
+  }
+  async updateOne(query, data) {
+    const productUpdate = await productsMongoose.findByIdAndUpdate(
+      query,
+      { $set: data },
+      {
+        new: true,
+      }
+    );
+    return productUpdate;
+  }
+  async updateMany(query, data) {}
+  async deleteOne(query) {
+    const productDelete = await productsMongoose
+      .findByIdAndDelete(query)
+      .lean();
+    return productDelete;
+  }
+  async deleteMany(query) {}
+}
+
+export const productsDaoMongoose = new ProductsDaoMonoose();

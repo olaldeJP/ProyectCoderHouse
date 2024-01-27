@@ -1,5 +1,4 @@
-import { hashear } from "../../services/crypt.js";
-import { usersMongoose } from "../../services/index.js";
+import { usersService } from "../../services/users.service.js";
 export async function sesionActual(req, res) {
   try {
     if (req.user) {
@@ -13,9 +12,7 @@ export async function sesionActual(req, res) {
 
 export async function register(req, res, next) {
   try {
-    req.body.password = hashear(req.body.password);
-    const reg = await usersMongoose.create(req.body);
-    req.user = reg.toObject();
+    req.user = await usersService.register(req.body);
     next();
   } catch (error) {
     return res.status(400).json({ status: "error", message: error.message });

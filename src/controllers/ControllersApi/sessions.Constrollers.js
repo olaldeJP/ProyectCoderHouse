@@ -1,16 +1,10 @@
-import { usersMongoose } from "../../services/index.js";
-import { hashear } from "../../services/crypt.js";
+import { usersService } from "../../services/users.service.js";
 import { COOKIE_OPTS } from "../../config/config.js";
 //Se guarda en la base de datos el usuario enviado desde register.handlebars
 
 export async function cambiarPass(req, res) {
   try {
-    req.body.password = hashear(req.body.password);
-    const actualizado = await usersMongoose.updateOne(
-      { email: req.body.email },
-      { $set: { password: req.body.password } },
-      { new: true }
-    );
+    const actualizado = await usersService.actualizarPasswordUser(req.body);
     res.json({ status: "success", payload: actualizado });
   } catch (error) {
     res.status(400).json({ status: "error", message: error.message });

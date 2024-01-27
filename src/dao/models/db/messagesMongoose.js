@@ -15,3 +15,13 @@ const MessageSchema = new Schema(
 );
 
 export const MessagesManagerMongoose = model("messages", MessageSchema);
+
+class messaesDaoMonoose {
+  async create(data) {}
+  async readOne(query) {}
+  async readMany(query) {}
+  async updateOne(query, data) {}
+  async updateMany(queri, data) {}
+  async deleteOne(query) {}
+  async deleteMany(query) {}
+}

@@ -1,34 +1,11 @@
-// import { managerProducts } from "../../dao/models/fs/productManager.js";
 import { productsMongoose } from "../../services/index.js";
-import { changeNameAndId } from "../../middlewares/multer.Middlewares.js";
+// import { changeNameAndId } from "../../middlewares/multer.Middlewares.js";
+import { productService } from "../../services/products.service.js";
 
-// funciones GET constrollers de los productos
-
-//getProductsController Devuelve la lista de los productos almacenados en la base de datos, si existe un limite en req.query.limit, devolvera solo los promeros limits del arreglo
 export async function getProductsController(req, res) {
   try {
-    const cantidad = parseInt(req.query.limit);
-    // FORMA DE OBTENER LOS PRODUCTOS CON FILE SYSTEM:
-    //const array = await managerProducts.getProducts();
-
-    //FORMA CON MONGOOSE:
-
-    const array = await productsMongoose.find().lean();
-    /* const limitar = await productsMongoose.aggregate[
-      {
-        $limit: { cantidad },
-      }
-    ];
-*/
-
-    if (!cantidad) {
-      return res.status(200).json({ status: "success", products: array });
-    } else {
-      return res
-        .status(200)
-        .json({ statuss: "sucess", products: array.slice(0, cantidad) });
-    }
-    throw new error("Error , PRODUCTO NO ENCONTRADO ");
+    const array = await productService.mostrarVariosProductos();
+    return res.status(200).json({ statuss: "sucess", products: array });
   } catch (error) {
     return res.status(400).json({
       status: "error",
@@ -40,12 +17,11 @@ export async function getProductsController(req, res) {
 // Devuelve el producto con el ID especifico, en caso de no existir deuelve False
 export async function getProductsByIdController(req, res) {
   try {
-    const _id = req.params.pid;
-    // const productID = await managerProducts.getProductById(id);
-
-    const productID = await productsMongoose.findById(_id).lean();
-
-    return res.status(200).json({ status: "success", products: productID });
+    const product = await productService.buscarPorID(req.params.pid);
+    if (!product) {
+      throw new Error();
+    }
+    return res.status(200).json({ status: "success", products: product });
   } catch (error) {
     return res.status(400).json({
       status: "error",
@@ -65,27 +41,6 @@ export async function postAgregarProductController(req, res) {
     });
   }
 }
-//!TODO ESTO NECESITA CAMBIARSE POR MONGOOSE
-//Se envia por un body los campos y los valores a actualizar en el producto, ademas de volver a enviar los productos con el socket
-// export async function actualizarProductoIdController(req, res) {
-//   const objects = req.body;
-//   const campos = Object.keys(objects);
-//   const valores = Object.values(objects);
-//   const id = req.params.pid;
-//   try {
-//     for (let index = 0; index < campos.length; index++) {
-//       await managerProducts.updateProduct(id, campos[index], valores[index]);
-//     }
-
-//     res["sendProducts"]();
-//     return res.status(201).json(await managerProducts.getProductById(id));
-//   } catch (error) {
-//     return res.status(400).json({
-//       status: "error",
-//       message: " Error al Actualizando producto",
-//     });
-//   }
-// }
 
 //!TODO ESTO NECESITA CAMBIARSE POR MONGOOSE
 //Se elimina el producto de la base de datos y se envia los productos por el socket
@@ -108,33 +63,27 @@ export async function postAgregarProductController(req, res) {
 
 //se crea un producto nuevo en la base de datos
 
-export async function postAgregarProductMongoDBController(req, res) {
+export async function addNewProduct(req, res) {
   try {
     // changeNameAndId(req);
 
-    const nuevoProduct = await productsMongoose.create(req.body);
+    const nuevoProduct = await productService.crearProducto(req.body);
 
-    return res.status(201).json(nuevoProduct.toObject());
+    return res.status(201).json(nuevoProduct);
   } catch (error) {
     return res.status(400).json({ status: "error", message: error.message });
   }
 }
 
-export async function actualizarProductoIdMongoController(req, res) {
+export async function updateProduct(req, res) {
   try {
     const _id = req.params.pid;
-    const productUpdate = await productsMongoose.findByIdAndUpdate(
+    const productUpdate = await productService.actualizarProducto(
       _id,
-      { $set: req.body },
-      {
-        new: true,
-      }
+      req.body
     );
-
     if (!productUpdate) {
-      return res
-        .status(400)
-        .json({ status: "error", message: "id no encontrado" });
+      throw new Error("Product Not Found");
     } else {
       return res.status(200).json(productUpdate);
     }
@@ -145,10 +94,9 @@ export async function actualizarProductoIdMongoController(req, res) {
 
 export async function deleteProductMongoose(req, res) {
   try {
-    const _id = req.params.pId;
-    const productoEliminado = await productsMongoose
-      .findByIdAndDelete(_id)
-      .lean();
+    const productoEliminado = await productService.borrarProductoPorID(
+      req.params.pId
+    );
 
     if (!productoEliminado) {
       return res.status(400).json({
