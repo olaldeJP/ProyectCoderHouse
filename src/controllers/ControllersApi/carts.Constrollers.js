@@ -58,17 +58,13 @@ export async function agregarProductosArregloCartsByCId(req, res) {
 }
 
 // Devuelve el arreglo de productos del carrito enviado, en caos que no lo encuentre lo devuelve
-export async function mostrarListaDeProductosByCId(req, res) {
+export async function mostrarCartByCId(req, res) {
   try {
-    const cart = await cartsMongoose.findById(req.params.cid).lean();
-
+    const cart = await cartsService.buscarPorID(req.params.cid);
     if (cart) {
       return res.status(200).json(cart.products);
-    } else {
-      return res
-        .status(404)
-        .json({ status: "ERROR", message: "Id del carrito no encontrado" });
     }
+    throw new Error();
   } catch (error) {
     return res
       .status(404)
@@ -79,8 +75,7 @@ export async function mostrarListaDeProductosByCId(req, res) {
 // Envia todos los carritos que esten guardados en la base de datos.
 export async function mostrarListaDeCarts(req, res) {
   try {
-    const listaCarrito = await cartsMongoose.find().lean();
-
+    const listaCarrito = await cartsService.mostrarVarioscarts();
     res.status(200).json(listaCarrito);
   } catch (error) {
     res.status(400).json({ status: "ERROR", message: "Error en la peticion" });

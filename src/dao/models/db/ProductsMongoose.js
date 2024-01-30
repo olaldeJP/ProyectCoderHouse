@@ -36,7 +36,7 @@ class ProductsDaoMonoose {
   }
 
   async readOne(query) {
-    const product = await productsMongoose.findById(query);
+    const product = await productsMongoose.findById(query).lean();
     return product;
   }
   async readMany(query) {

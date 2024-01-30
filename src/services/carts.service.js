@@ -4,7 +4,7 @@ class CartsService {
     const carts = await cartsDaoMongoose.readOne(_id);
     return carts;
   }
-  async mostrarVarioscartsos() {
+  async mostrarVarioscarts() {
     const array = await cartsDaoMongoose.readMany();
     return array;
   }

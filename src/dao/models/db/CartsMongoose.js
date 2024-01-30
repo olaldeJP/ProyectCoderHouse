@@ -30,8 +30,14 @@ class CartsDaoMonoose {
     const newCart = await cartsMongoose.create({});
     return newCart;
   }
-  async readOne(query) {}
-  async readMany(query) {}
+  async readOne(query) {
+    const cart = await cartsMongoose.findById(query).lean();
+    return cart;
+  }
+  async readMany(query) {
+    const array = await cartsMongoose.find().lean();
+    return array;
+  }
   async updateOne(query, data) {}
   async updateMany(query, data) {}
   async deleteOne(query) {}

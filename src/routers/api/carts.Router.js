@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   agregarProductosArregloCartsByCId,
   mostrarListaDeCarts,
-  mostrarListaDeProductosByCId,
+  mostrarCartByCId,
   createNewCart,
   borrarProductoDelCarrito,
   actualizarCarrito,
@@ -16,7 +16,7 @@ export const cartsRouter = new Router();
 
 cartsRouter.post("/", createNewCart);
 cartsRouter.post("/:cid/product/:pid", agregarProductosArregloCartsByCId);
-cartsRouter.get("/:cid", mostrarListaDeProductosByCId);
+cartsRouter.get("/:cid", mostrarCartByCId);
 cartsRouter.get("/", mostrarListaDeCarts);
 cartsRouter.put("/:cId", actualizarCarrito);
 cartsRouter.put("/:cId/products/:pid", actualizarProductoEnElCarrito);
