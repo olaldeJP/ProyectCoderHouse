@@ -1,45 +1,49 @@
-
-.centrarElementos{
+.centrarElementos {
     display: flex;
 }
-.navBar{
-   
-    display: flex;  
+
+.navBar {
+
+    display: flex;
     justify-content: space-around;
-    border:  solid 2px rgb(22, 95, 206);
+    border: solid 2px rgb(22, 95, 206);
     border-radius: 15px;
     margin-bottom: 30px;
 }
 
-.sectionForms{
+.sectionForms {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    
+
 }
-.selectForms{
+
+.selectForms {
     width: 30%;
-    margin-bottom: 10px ;
+    margin-bottom: 10px;
 }
-.formulario{
+
+.formulario {
     display: flex;
     gap: 7px;
     flex-direction: column;
     width: 40%;
 }
 
-ul{
+ul {
     display: flex;
     gap: 20px;
     list-style-type: none;
     padding: 10px;
     flex-direction: row;
-  
+
 }
-li{
-    margin:10px 10px 10px 10px
+
+li {
+    margin: 10px 10px 10px 10px
 }
-a{    
+
+a {
     border: solid 2px black;
     border-radius: 35%;
     margin: 10 10px 5px 10px;
@@ -47,30 +51,35 @@ a{
     text-decoration: none;
     font-size: large;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    padding:10px;
+    padding: 10px;
     transition: all 1s;
 }
-a:hover{
+
+a:hover {
     color: rgb(32, 81, 172);
-    border:solid 2px white;
+    border: solid 2px white;
     text-decoration: underline;
 }
 
-.modal{
-    
-  display: grid;
-  justify-items: center;
-  position: fixed;
-  align-items: center;
-  top: 50px;
-  left: 80px;
-  width: 50%;
-  height: 30%;
-  background-color: gray;
-  border: 2px solid rgba(48, 106, 214, 0.807)
+#addProduct {
+    visibility: visible;
 }
 
-.butModal{
+.modal {
+
+    display: grid;
+    justify-items: center;
+    position: fixed;
+    align-items: center;
+    top: 50px;
+    left: 80px;
+    width: 50%;
+    height: 30%;
+    background-color: gray;
+    border: 2px solid rgba(48, 106, 214, 0.807)
+}
+
+.butModal {
     width: 100px;
     height: 30px;
     border-radius: 15%;
@@ -79,32 +88,35 @@ a:hover{
     border: 2px solid black;
     transition: 2s;
 }
-.butModal:hover{
-   background-color:rgba(48, 106, 214, 0.807)
+
+.butModal:hover {
+    background-color: rgba(48, 106, 214, 0.807)
 }
-.butModalC:hover{
-    background-color:red;
+
+.butModalC:hover {
+    background-color: red;
 }
-.inpDatos{
+
+.inpDatos {
     margin-top: 50px;
     width: 200px;
     height: 30px;
 }
 
-.container{
+.container {
     display: flex;
     justify-content: center;
 }
 
 
-.boxElement{
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 20px;
+.boxElement {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
 }
 
-.box{
+.box {
     margin-right: 20px;
     border: solid 3px rgba(48, 106, 214, 0.807);
     border-radius: 15px;
@@ -114,32 +126,36 @@ a:hover{
     display: inline-block;
     vertical-align: top;
 }
-.boxMessages{
+
+.boxMessages {
     display: grid;
-   align-content: center;
+    align-content: center;
     flex-direction: column;
-    border: solid 2px  rgba(48, 106, 214, 0.807);;
+    border: solid 2px rgba(48, 106, 214, 0.807);
+    ;
     border-radius: 30px;
     padding: 20px;
     margin-top: 35px;
     width: 60%;
     height: 450px;
-    
+
 }
-.windowsMessages{
+
+.windowsMessages {
     height: 400px;
-    background-color: white; 
-  
-    overflow-y: auto;   
-}
-.hidden{
-   display: none;
+    background-color: white;
+
+    overflow-y: auto;
 }
 
+.hidden {
+    display: none;
+}
 
 
 
-footer{
+
+footer {
     margin-top: 5%;
     border: 1px solid black;
 }
