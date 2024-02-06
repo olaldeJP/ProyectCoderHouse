@@ -43,6 +43,5 @@ webSocketServer.on("connection", onConnection(webSocketServer)); //Cuando alguie
 app.use(inyectarSocketServer(webSocketServer));
 app.use(socketMessage(webSocketServer));
 //Se agregan las apis a las rutas
-app.use(extraerUserCookie);
 app.use("/api", apiRouter);
 app.use("/", webRouter);
