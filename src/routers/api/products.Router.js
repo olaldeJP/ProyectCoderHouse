@@ -7,11 +7,13 @@ import {
   updateProduct,
   deleteProductMongoose,
 } from "../../controllers/ControllersApi/products.Controllers.js";
+import { extraerUserCookie } from "../../middlewares/cookies.Middlewares.js";
+
 export const productsRouter = new Router();
 
 productsRouter.get("/", getProductsController);
 productsRouter.get("/:pid", getProductsByIdController);
 productsRouter.post("/addImg", upload.single("imagenProductos"));
-productsRouter.post("/", addNewProduct);
+productsRouter.post("/", extraerUserCookie, addNewProduct);
 productsRouter.put("/:pid", updateProduct);
 productsRouter.delete("/:pId", deleteProductMongoose);

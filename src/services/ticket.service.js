@@ -1,3 +1,3 @@
-import { ticketDaoMongoose } from "../dao/models/db/TicketMongoose";
+import { ticketDaoMongoose } from "../dao/models/db/TicketMongoose.js";
+
 class TicketsServices {}
-npm;

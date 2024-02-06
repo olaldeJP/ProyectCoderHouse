@@ -65,10 +65,7 @@ export async function postAgregarProductController(req, res) {
 
 export async function addNewProduct(req, res) {
   try {
-    // changeNameAndId(req);
-
     const nuevoProduct = await productService.crearProducto(req.body);
-
     return res.status(201).json(nuevoProduct);
   } catch (error) {
     return res.status(400).json({ status: "error", message: error.message });
@@ -111,3 +108,7 @@ export async function deleteProductMongoose(req, res) {
 }
 
 export async function agregarImg(req, res) {}
+
+export async function manejadorDeErrores(error, req, res, next) {
+  res.status(400).json({ status: "error", message: error.message });
+}

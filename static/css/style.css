@@ -61,10 +61,6 @@ a:hover {
     text-decoration: underline;
 }
 
-#addProduct {
-    visibility: visible;
-}
-
 .modal {
 
     display: grid;

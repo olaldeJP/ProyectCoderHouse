@@ -10,17 +10,7 @@ const socket = io("http://localhost:8080/", {
 });
 
 let ordenar = true;
-fetch("/api/sessions/current")
-  .then(async (res) => {
-    const data = await res.json();
-    return JSON.stringify(data);
-  })
-  .then(async (req) => {
-    const currentUser = await JSON.parse(req);
-    if (currentUser.user.role === "admin") {
-      buttonAddProduct.style.visibility = "hidden";
-    }
-  });
+
 function irPagina(limit) {
   const pagDeseada = document.querySelector("input").value || 1;
   window.location = `/?limit=${limit}&page=${pagDeseada}&sort=${ordenar}`;

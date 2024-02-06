@@ -9,10 +9,15 @@ export async function guardarUserToken(req, res, next) {
 }
 
 export async function extraerUserCookie(req, res, next) {
-  const signedCookie = req.signedCookies.authorization;
-  if (signedCookie) {
+  try {
+    const signedCookie = req.signedCookies.authorization;
+    if (!signedCookie) {
+      throw new Error("Not authorized");
+    }
     const tokenDesencript = await desencriptar(signedCookie);
     req.user = tokenDesencript;
+    next();
+  } catch (error) {
+    next(error);
   }
-  next();
 }
