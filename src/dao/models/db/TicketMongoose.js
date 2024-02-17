@@ -4,10 +4,10 @@ import { randomUUID } from "node:crypto";
 const TicketManager = new Schema(
   {
     _id: { type: String, default: randomUUID },
-    code: { type: String, required: true, unique: true },
-    purchase_datetime: { type: Date },
+    code: { type: String, default: randomUUID },
+    purchase_datetime: { type: Date, required: true },
     amount: { type: Number },
-    purchaser: { type: String },
+    purchaser: { type: String, required: true },
   },
   {
     strict: "throw",

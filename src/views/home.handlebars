@@ -4,7 +4,6 @@
 <h2>Welcome</h2>
 <h2>{{user.first_name}} </h2>
 
-{{#if payload}}
 
 <select name="ordenar" id="ordenar">
 <option value="desc">Ordenar Por Precio</option>
@@ -13,30 +12,18 @@
 </select>
 <input type="text" id="inputBuscador" placeholder="Buscardor de Producto">
 <button id="botonBuscar">Buscar</button>
-
 <div class="container">
-    
-    {{#each payload}}
-    <div class="box" id={{this.id}}>
-       <p>{{this.title}}</p>
-       <p>{{this.description}}</p>
-       <p>${{this.price}} </p>
-       <p> STOCK: {{this.stock}}</p>
-
-        <button > + </button><br>
-        <button onclick="descripcionProducto(this)"> Description </button>   
-    </div>
-    {{/each}}
 </div>
-{{else}}
-<p>No hay productos para mostrar</p>
-{{/if}}<br><br>
-<a {{#if hasPrevPage}} href="/?limit={{limit}}&page={{prevPage}}" {{/if}}>Prev</a>
-[{{ page }}]
-<a {{#if hasNextPage}} href="/?limit={{limit}}&page={{nextPage}}" {{/if}}>Next</a><br>
-<br><br>
-Página: <input type="text"> <button onclick="irPagina({{limit}})">ir</button>
-<br><br>
+
+
+
+<input type="number" placeholder="Limit" id='limit'><br>
+<button id="limitButton">Limit</button>
+<div class="container" id="containerProducts">
+
+</div><br>
+<button id="aPrev">Prev</button>
+<button id="aNext">Next</button>
 {{>footer}}
 
 <script src="../socket.io/socket.io.js"></script>   

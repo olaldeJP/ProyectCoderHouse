@@ -21,14 +21,18 @@ export async function homeWeb(req, res) {
       page: req.query.page || 1, //cantidad de paginas , se pone en 1 si no se envian paginas
       lean: true, // se muestran los objetos
     };
-    const criterioBusqueda = {};
+
     if (req.query.sort) {
       //en el caso que se envie un query.sort se ordenaran los productos
       opcionesDePaginacion.sort = {
         price: req.query.sort === "desc" ? -1 : 1,
       };
     }
-    if (req.query.query) {
+    let criterioBusqueda = {};
+    if (req.query.title) {
+      criterioBusqueda = {
+        title: req.query.title || "",
+      };
     }
     const productos = await productsMongoose.paginate(
       //se agrega la paginacion con un criterio de busqueda  y opciones de paginacion

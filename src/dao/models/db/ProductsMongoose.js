@@ -62,5 +62,4 @@ class ProductsDaoMonoose {
   }
   async deleteMany(query) {}
 }
-
 export const productsDaoMongoose = new ProductsDaoMonoose();

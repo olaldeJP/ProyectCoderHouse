@@ -14,7 +14,7 @@ import { mongoConf } from "./config/mongodb.conf.js";
 import { initializePassport } from "./config/passport.conf.js";
 import { handlebarsConf } from "./config/handlebars.conf.js";
 import { COOKIE_KEY } from "./config/config.js";
-import { extraerUserCookie } from "./middlewares/cookies.Middlewares.js";
+import { manejadorDeErrores } from "./controllers/ControllersApi/products.Controllers.js";
 
 const app = express();
 
@@ -45,3 +45,4 @@ app.use(socketMessage(webSocketServer));
 //Se agregan las apis a las rutas
 app.use("/api", apiRouter);
 app.use("/", webRouter);
+app.use(manejadorDeErrores);

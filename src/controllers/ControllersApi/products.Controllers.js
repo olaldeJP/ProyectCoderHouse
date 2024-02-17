@@ -1,7 +1,6 @@
 import { productsMongoose } from "../../services/index.js";
 // import { changeNameAndId } from "../../middlewares/multer.Middlewares.js";
 import { productService } from "../../services/products.service.js";
-
 export async function getProductsController(req, res) {
   try {
     const array = await productService.mostrarVariosProductos();
@@ -13,7 +12,14 @@ export async function getProductsController(req, res) {
     });
   }
 }
-
+export async function getProductsPaginate(req, res, next) {
+  try {
+    const productPaginate = await productService.mostrarProductosPaginados(req);
+    res.status(200).json(productPaginate);
+  } catch (error) {
+    next(error);
+  }
+}
 // Devuelve el producto con el ID especifico, en caso de no existir deuelve False
 export async function getProductsByIdController(req, res) {
   try {
@@ -41,28 +47,16 @@ export async function postAgregarProductController(req, res) {
     });
   }
 }
-
-//!TODO ESTO NECESITA CAMBIARSE POR MONGOOSE
-//Se elimina el producto de la base de datos y se envia los productos por el socket
-// export async function eliminarProductoIdController(req, res) {
-//   const id = req.params.pid;
-
-//   try {
-//     await managerProducts.deleteProductByID(id);
-//     res["sendProducts"]();
-//     return res
-//       .status(201)
-//       .json({ status: "success", messagge: `${id} ya no esta en la lista` });
-//   } catch (error) {
-//     return res.status(400).json({
-//       status: "error",
-//       message: "error Eliminando producto",
-//     });
-//   }
-// }
-
-//se crea un producto nuevo en la base de datos
-
+export async function checkAdmin(req, res, next) {
+  try {
+    if (!(req.user.role === "admin")) {
+      throw new Error("Not Authorizathion");
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
 export async function addNewProduct(req, res) {
   try {
     const nuevoProduct = await productService.crearProducto(req.body);

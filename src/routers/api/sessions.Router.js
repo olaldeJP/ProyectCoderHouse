@@ -2,7 +2,6 @@ import { Router } from "express";
 import passport from "passport";
 
 import { sesionActual } from "../../controllers/ControllersApi/users.Controllers.js";
-import { extraerUserCookie } from "../../middlewares/cookies.Middlewares.js";
 import {
   logout,
   cambiarPass,
@@ -28,6 +27,6 @@ sessionsRouter.post(
     res.status(401).json({ status: "error", message: error.message });
   }
 );
-sessionsRouter.get("/current", extraerUserCookie, sesionActual);
+sessionsRouter.get("/current", sesionActual);
 sessionsRouter.delete("/logout", logout);
 sessionsRouter.put("/cambiarPassword", cambiarPass);
