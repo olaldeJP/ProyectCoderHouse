@@ -11,66 +11,46 @@ const buttonNext = document.querySelector("#aNext");
 const buttonPrev = document.querySelector("#aPrev");
 
 let ordenar = true;
+let productsPag;
 window.addEventListener("load", async () => {
-  let productsPag = await fetch(`/api/products/productsPaginate`).then(
+  productsPag = await fetch(`/api/products/productsPaginate`).then(
     async (res) => {
       return await res.json();
     }
   );
   mostrarProductosPaginados(productsPag.payload);
-
-  buttonLimit.addEventListener("click", async () => {
-    let productsPag = await fetch(
-      `/api/products/productsPaginate/?limit=${limit.value}`
+  checkearBoton();
+  buttonNext.addEventListener("click", async () => {
+    productsPag = await fetch(
+      `/api/products/productsPaginate/?page=${productsPag.nextPage}&limit=${limit.value}`
     ).then(async (res) => {
       return await res.json();
     });
     mostrarProductosPaginados(productsPag.payload);
+    checkearBoton();
   });
-  if (productsPag.hasNextPage) {
-    buttonNext.addEventListener("click", async () => {
-      productsPag = await fetch(
-        `/api/products/productsPaginate/?limit=${limit.value}&page=${productsPag.nextPage}`
-      ).then(async (res) => {
-        return await res.json();
-      });
-      mostrarProductosPaginados(productsPag.payload);
+  buttonPrev.addEventListener("click", async () => {
+    productsPag = await fetch(
+      `/api/products/productsPaginate/?page=${productsPag.prevPage}&limit=${limit.value}`
+    ).then(async (res) => {
+      return await res.json();
     });
-  }
-  if (productsPag.hasPrevPage) {
-    buttonPrev.addEventListener("click", async () => {
-      productsPag = await fetch(
-        `/api/products/productsPaginate/??limit=${limit.value}&page=${productsPag.hasPrevPage}`
-      ).then(async (res) => {
-        return await res.json();
-      });
-      mostrarProductosPaginados(productsPag.payload);
-    });
-  }
+    mostrarProductosPaginados(productsPag.payload);
+    checkearBoton();
+  });
 });
-
-function irPagina(limit) {
-  const pagDeseada = document.querySelector("input").value || 1;
-  window.location = `/?limit=${limit}&page=${pagDeseada}&sort=${ordenar}`;
-}
-ordenDeProduct.addEventListener("change", function cambioOrden(limit) {
-  try {
-    ordenar = document.querySelector("#ordenar").value;
-    console.log(ordenar);
-    window.location = `/?sort=${ordenar}`;
-  } catch (error) {
-    console.log(error.message);
+async function checkearBoton() {
+  if (!productsPag.hasPrevPage) {
+    buttonPrev.disabled = true;
+  } else {
+    buttonPrev.disabled = false;
   }
-});
-
-async function descripcionProducto(button) {
-  window.location = `/${button.parentNode.childNodes[1].textContent}`;
+  if (!productsPag.hasNextPage) {
+    buttonNext.disabled = true;
+  } else {
+    buttonNext.disabled = false;
+  }
 }
-
-async function volver() {
-  window.location = `/`;
-}
-
 async function mostrarProductosPaginados(payload) {
   divContainer.innerHTML = "";
   for (let index = 0; index < payload.length; index++) {
@@ -87,6 +67,27 @@ async function mostrarProductosPaginados(payload) {
   }
 }
 
+buttonLimit.addEventListener("click", async () => {
+  productsPag = await fetch(
+    `/api/products/productsPaginate/?limit=${limit.value}`
+  ).then(async (res) => {
+    return await res.json();
+  });
+  mostrarProductosPaginados(productsPag.payload);
+  checkearBoton();
+});
+
+ordenDeProduct.addEventListener("change", async (e) => {
+  e.preventDefault();
+  ordenar = document.querySelector("#ordenar").value;
+  productsPag = await fetch(
+    `/api/products/productsPaginate/?limit=${limit.value}&sort=${ordenar}`
+  ).then(async (res) => {
+    return await res.json();
+  });
+  mostrarProductosPaginados(productsPag.payload);
+  checkearBoton();
+});
 botonBuscar.addEventListener("click", async (e) => {
   e.preventDefault();
   const valor = inpB.value;
